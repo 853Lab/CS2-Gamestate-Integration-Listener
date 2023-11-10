@@ -1,5 +1,5 @@
 import { ListenServer } from "./listenserver"
-import { GameStateData } from "./gsi_data/main"
+import { GameStateData } from "cs2-gamestate-integration-data/dist/main"
 
 let listenServer = new ListenServer()
 listenServer.conf.wss.enable = true

@@ -1,7 +1,7 @@
 import http = require("http")
 import { EventEmiter } from "./method"
 import { WebSocketServer } from "ws"
-import { GameStateData } from "./gsi_data/main"
+import { GameStateData } from "cs2-gamestate-integration-data/dist/main"
 /** 建立监听 CS2 发来的数据 */
 export class ListenServer extends EventEmiter {
   /** 域名或 IP */

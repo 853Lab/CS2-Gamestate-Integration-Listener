@@ -1,8 +1,8 @@
 import { ListenServer } from "./listenserver"
-import { GameStateData } from "./gsi_data/main"
+import { GameStateData } from "cs2-gamestate-integration-data/dist/main"
 import * as fs from "fs"
 import * as path from "path"
-import { Gun, PistolOf } from "./gsi_data/weapon/type"
+import { Gun, PistolOf } from "cs2-gamestate-integration-data/dist/weapon/type"
 
 let listenServer = new ListenServer()
 listenServer.conf.wss.enable = true
