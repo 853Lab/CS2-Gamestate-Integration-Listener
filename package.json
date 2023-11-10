@@ -1,0 +1,30 @@
+{
+  "name": "cs2_gamestate_integration_websocket",
+  "version": "1.0.0",
+  "description": "CS2 Gamestate Integration WebSocket",
+  "main": "dist/main.js",
+  "scripts": {
+    "build:auto": "tsc -w",
+    "run": "node --inspect dist/main.js",
+    "test": "node --inspect dist/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/853Lab/CS2_Gamestate_Integration_WebSocket.git"
+  },
+  "keywords": [],
+  "author": "Sonic853",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/853Lab/CS2_Gamestate_Integration_WebSocket/issues"
+  },
+  "homepage": "https://github.com/853Lab/CS2_Gamestate_Integration_WebSocket#readme",
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "@types/ws": "^8.5.9",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "ws": "^8.14.2"
+  }
+}

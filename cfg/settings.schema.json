@@ -1,0 +1,126 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON schema file.\nJSON schema 文件。",
+      "default": "settings.schema.json"
+    },
+    "wss": {
+      "type": "object",
+      "description": "Websocket server configuration.\nWebsocket 服务端配置",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Enable websocket server.\n启用 Websocket 服务端",
+          "default": true
+        },
+        "port": {
+          "type": "number",
+          "description": "Websocket server port.\nWebsocket 服务端端口"
+        }
+      }
+    },
+    "cfg": {
+      "type": "object",
+      "description": "cfg file placed in CS2.\n放置于CS2的cfg文件。\nhttps://developer.valvesoftware.com/wiki/Counter-Strike:_Global_Offensive_Game_State_Integration",
+      "properties": {
+        "filename": {
+          "type": "string",
+          "description": "cfg file name.\ncfg文件名。",
+          "default": "gamestate_integration_853lab_websocket.cfg"
+        },
+        "name": {
+          "type": "string",
+          "description": "description of cfg file.\ncfg文件的描述。",
+          "default": "CS2 WebSocket Engine v 1.0"
+        },
+        "cfgdata": {
+          "type": "object",
+          "description": "cfg file data.\ncfg文件数据。\nhttps://developer.valvesoftware.com/wiki/Counter-Strike:_Global_Offensive_Game_State_Integration",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "Game will be making POST requests to this uri. If the endpoint needs traffic to be encrypted in flight then it is recommended to specify a secure uri and use SSL on the service end. Steam client will automatically use SSL and validate endpoint certificate for https destinations.\n[Note]: If your endpoint is never receiving JSON payload blocks named \"previously\" or \"added\" then this may be an indication that the game client is never getting HTTP 2XX response and always considers the request as failed.\n游戏将会发出 HTTP POST 到这个 uri。如果这个端点需要在传输过程中需要加密，那么我们推荐使用 SSL 来保护这个 uri。Steam 客户端将会自动启用 SSL 并且对端点的证书进行验证。\n【注意】：如果你的端点没有收到 JSON 数据中名字为“previously”和“added”的键。那么这可能说明游戏客户端从未收到 2XX HTTP 状态码，并且认为数据发送失败",
+              "default": "http://127.0.0.1:8532/"
+            },
+            "timeout": {
+              "type": "string",
+              "description": "Game expects an HTTP 2XX response code from its HTTP POST request, and game will not attempt submitting the next HTTP POST request while a previous request is still in flight. The game will consider the request as timed out if a response is not received within so many seconds, and will re-heartbeat next time with full state omitting any delta-computation. If the setting is not specified then default short timeout of 1.1 sec will be used.\n游戏期待 HTTP 端点返回 2XX 状态码 (即 200-299)，并且游戏将不会在服务器正确返回前发送下一个数据。如果 HTTP 服务器迟迟不进行返回，游戏将会考虑请求已经超时，并且在下一次发送数据时重新计算心跳，忽略任何延迟计算。单位为秒。",
+              "default": "5.0"
+            },
+            "buffer": {
+              "type": "string",
+              "description": "Because multiple game events tend to occur one after another very quickly, it is recommended to specify a non-zero buffer. When buffering is enabled, the game will collect events for so many seconds to report a bigger delta. For localhost service integration this is less of an issue and can be tuned to match the needs of the service or set to 0.0 to disable buffering completely. If the setting is not specified then default buffer of 0.1 sec will be used.\n因为非常多的游戏事件会相继发生，因此建议设置一个不为 0 的缓冲时间。当缓冲机制启动后，游戏将会发送一个在这么多秒时间内发生的游戏事件。对于在本地或者局域网中需要集成的程序来说这不是什么问题，你可以根据你的服务来进行调整。你可以设置为 0.0 来禁用缓冲机制，或者使用 0.1 的默认缓冲时间。单位为秒。",
+              "default": "0.1"
+            },
+            "throttle": {
+              "type": "string",
+              "description": "For high-traffic endpoints this setting will make the game client not send another request for at least this many seconds after receiving previous HTTP 2XX response to avoid notifying the service when game state changes too frequently. If the setting is not specified then default throttle of 1.0 sec will be used.\n对于要处理高流量的端点，节流设置可以使得游戏客户端在拿到了 HTTP 服务器的 2XX 状态码后的这么多秒内不发送请求来避免过多的游戏状态通知。如果没有设置节流，默认将会使用 1 秒。单位为秒。",
+              "default": "0.1"
+            },
+            "heartbeat": {
+              "type": "string",
+              "description": "Even if no game state change occurs, this setting instructs the game to send a request so many seconds after receiving previous HTTP 2XX response. The service can be configured to consider game as offline or disconnected if it didn't get a notification for a significant period of time exceeding the heartbeat interval.\n即使没有游戏状态的更改，这个设置也会让游戏客户端在收到了之前的 HTTP 服务器 2XX 状态码后的多少秒内发出一个请求。这个服务可以被配置为当没有接收到心跳检测的成功消息一段时间后可以考虑为游戏已经离线或者与整合的第三方服务端开了连接。",
+              "default": "1.0"
+            },
+            "auth": {
+              "type": "object",
+              "description": "Both sample cfg files provided in this document contain an optional \"auth\" configuration section. In most localhost or even LAN integration scenarios this section can be completely omitted, but when it is present, fields in this section will be transmitted as JSON string fields to the endpoint to authenticate the payload. It is recommended for the endpoint to also use SSL to protect the in flight payload containing an authentication block.\n在本文档提供的两个示例配置文件中都包含了一个可选的“auth”选项。在大多数的 localhost 或者局域网的整合场景中，这部分可以被完全忽略。当这个字段出现在请求载荷中，服务器可以对其进行游戏客户端的有效载荷验证。当然，也建议端点采用 SSL 来保护传输中的所有有效载荷",
+              "additionalProperties": {
+                "type": "string",
+                "description": "auth key.\n验证密钥"
+              }
+            },
+            "data": {
+              "type": "object",
+              "description": "The specified game data will be sent to the HTTP server here.\n游此处会向HTTP服务端发送指定的游戏数据。",
+              "properties": {
+                "provider": {
+                  "type": "string",
+                  "description": "general info about client being listened to: game name, appid, client steamid, etc.\n游戏客户端的一些基本信息: 游戏名字, 游戏 appid, 玩家 SteamID 等",
+                  "default": "0"
+                },
+                "map": {
+                  "type": "string",
+                  "description": "map, gamemode, and current match phase ('warmup', 'intermission', 'gameover', 'live') and current score\n地图, 游戏模式, 和目前游戏阶段 ('warmup', 'intermission', 'gameover', 'live') 以及当前得分",
+                  "default": "0"
+                },
+                "round": {
+                  "type": "string",
+                  "description": "round phase ('freezetime', 'over', 'live'), bomb state ('planted', 'exploded', 'defused'), and round winner (if any)\n回合阶段 ('freezetime', 'over', 'live'), C4 炸弹状态 ('planted', 'exploded', 'defused'), 回合赢家 (如果有)",
+                  "default": "0"
+                },
+                "player_id": {
+                  "type": "string",
+                  "description": "player name, clan tag, observer slot (ie key to press to observe this player) and team\n玩家名字, 团队标签, 观察槽位和团队",
+                  "default": "0"
+                },
+                "player_state": {
+                  "type": "string",
+                  "description": "player state for this current round such as health, armor, kills this round, etc.\n本次匹配比赛的玩家状态，例如生命值，护甲(和头盔 如果有)，本场回合杀敌数 等",
+                  "default": "0"
+                },
+                "player_weapons": {
+                  "type": "string",
+                  "description": "output equipped weapons.\n玩家的武器（根据不同的武器类别从 weapons 0-5 共 6 中武器）",
+                  "default": "0"
+                },
+                "player_match_stats": {
+                  "type": "string",
+                  "description": "player stats this match such as kill, assists, score, deaths and MVPs\n玩家在这次匹配中的状态，例如总杀敌数，协助杀敌数，分数，死亡和 MVP 数量",
+                  "default": "0"
+                },
+                "map_round_wins": {
+                  "type": "string",
+                  "description": "history of round wins\n回合获胜历史",
+                  "default": "0"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

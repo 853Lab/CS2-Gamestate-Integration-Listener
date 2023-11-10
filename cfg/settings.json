@@ -1,0 +1,31 @@
+{
+  "$schema": "settings.schema.json",
+  "wss": {
+    "enable": true,
+    "port": 8523
+  },
+  "cfg": {
+    "filename": "gamestate_integration_853lab_websocket.cfg",
+    "name": "CS2 WebSocket Engine v 1.0",
+    "cfgdata": {
+      "uri": "http://127.0.0.1:8532/",
+      "timeout": "5.0",
+      "buffer": "0.1",
+      "throttle": "0.1",
+      "heartbeat": "1.0",
+      "auth": {
+        "anykey": "TheEndIsNeverTheEndIsNeverTheEndIsNeverTheEndIsNever"
+      },
+      "data": {
+        "provider": "0",
+        "map": "1",
+        "round": "1",
+        "player_id": "1",
+        "player_state": "1",
+        "player_weapons": "1",
+        "player_match_stats": "1",
+        "map_round_wins": "1"
+      }
+    }
+  }
+}

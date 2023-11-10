@@ -1,1 +1,2 @@
-# CS2_Gamestate_WebSocket
+# CS2 Gamestate Integration WebSocket
+CS2 Gamestate Integration WebSocket
