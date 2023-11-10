@@ -37,6 +37,10 @@ export interface PlayerData {
      * 比赛状态
      */
     match_stats?: PlayerMatchStats;
+    /**
+     * 观察者槽位
+     */
+    observer_slot: number;
 }
 /**
  * 玩家状态信息
@@ -57,19 +61,19 @@ export interface PlayerState {
     /**
      * 0 - 255
      *
-     * 闪
+     * 闪，被闪瞬间跳到 255，然后逐渐降低到 0
      */
     flashed: number;
     /**
      * 0 - 255
      *
-     * 烟
+     * 烟，有趣的是，这个数值能检测到玩家被烟雾弹影响的程度
      */
     smoked: number;
     /**
      * 0 - 255
      *
-     * 烧
+     * 烧，被烧的瞬间跳到 255，离开燃烧的范围后逐渐降低到 0
      */
     burning: number;
     /**

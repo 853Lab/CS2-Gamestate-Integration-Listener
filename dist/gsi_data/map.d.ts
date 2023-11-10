@@ -72,8 +72,8 @@ export interface MapTeamData {
 /**
  * 回合获胜类型
  */
-export type MapRoundWinsType = 'ct_win_time' | 'ct_win_elimination' | 't_win_elimination' | 't_win_bomb' | 'ct_win_defuse';
+export type MapRoundWinsType = "ct_win_time" | "ct_win_elimination" | "t_win_elimination" | "t_win_bomb" | "ct_win_defuse";
 /**
  * 地图模式
  */
-export type MapMode = string | 'deathmatch' | 'competitive';
+export type MapMode = string | "casual" | "competitive" | "scrimcomp2v2" | "scrimcomp5v5" | "gungameprogressive" | "gungametrbomb" | "deathmatch" | "training" | "custom" | "cooperative" | "coopmission" | "skirmish" | "survival";

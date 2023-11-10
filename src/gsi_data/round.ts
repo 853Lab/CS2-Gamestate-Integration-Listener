@@ -15,24 +15,26 @@ export interface RoundData {
   /**
    * 炸弹状态
    */
-  bomb?: string | RoundBombType
+  bomb?: RoundBombType
 }
 /**
  * 回合状态
  */
 export type PhaseType = string
-|'live'
-| 'bomb'
-| 'over'
-| 'freezetime'
-| 'paused'
-| 'defuse'
-| 'timeout_t'
-| 'timeout_ct'
-| 'warmup'
-| 'intermission'
-| 'gameover'
+|"live"
+| "bomb"
+| "over"
+| "freezetime"
+| "paused"
+| "defuse"
+| "timeout_t"
+| "timeout_ct"
+| "warmup"
+| "intermission"
+| "gameover"
 /**
  * 炸弹状态
  */
 export type RoundBombType = "planted"
+| "exploded"
+| "defused"

@@ -1,7 +1,7 @@
 /// <reference types="node" />
-import http = require('http');
-import { EventEmiter } from './method';
-import { WebSocketServer } from 'ws';
+import http = require("http");
+import { EventEmiter } from "./method";
+import { WebSocketServer } from "ws";
 /** 建立监听 CS2 发来的数据 */
 export declare class ListenServer extends EventEmiter {
     /** 域名或 IP */

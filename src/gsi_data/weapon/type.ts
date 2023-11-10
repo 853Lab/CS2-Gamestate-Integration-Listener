@@ -3,10 +3,8 @@ interface PropBase {
   name: string
   /** 武器皮肤 */
   paintkit: string | "default"
-  /** 武器类型 */
-  type?: string
-  /** active 在手上，holstered 在背包 */
-  state: "active" | "holstered"
+  /** active 在手上，holstered 在背包，reloading 正在装弹 */
+  state: "active" | "holstered" | "reloading"
 }
 interface PropsBase extends PropBase {
   /** 背包数量 */
@@ -126,8 +124,6 @@ export const PistolOf = (object: any): object is Pistol => {
 export interface Taser extends WeaponBase {
   /** 电击枪名称 */
   name: "weapon_taser"
-  /** 电击枪皮肤 */
-  paintkit: "default"
 }
 /**
  * 判断电击枪
@@ -143,8 +139,6 @@ export const TaserOf = (object: any): object is Taser => {
 export interface Shield extends PropBase {
   /** 盾牌名称 */
   name: "weapon_shield"
-  /** 盾牌皮肤 */
-  paintkit: "default"
 }
 /**
  * 判断盾牌

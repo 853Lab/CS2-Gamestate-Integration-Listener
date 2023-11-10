@@ -7,66 +7,97 @@ let listenServer = new listenserver_1.ListenServer();
 listenServer.conf.wss.enable = true;
 // 记录节点下的数据记录
 const jsonMap = new Map();
+// 读取先前的数据
+const readSavedData = (filename) => {
+    const data = fs.readFileSync(path.join(__dirname, filename), "utf-8");
+    const arr = data.split("\n");
+    arr.forEach(item => {
+        if (item !== "") {
+            const arr2 = item.split(": ");
+            const key = arr2[0];
+            const value = arr2[1].split(",");
+            if (jsonMap.has(key)) {
+                const arr = jsonMap.get(key);
+                if (arr) {
+                    value.forEach(v => {
+                        if (arr.indexOf(v) === -1) {
+                            arr.push(v);
+                        }
+                    });
+                }
+                else {
+                    jsonMap.set(key, value);
+                }
+            }
+            else {
+                jsonMap.set(key, value);
+            }
+        }
+    });
+};
+readSavedData("../data.txt");
 const getData = (key, obj) => {
     const keys = Object.keys(obj);
     keys.forEach(k => {
+        const _key = `${key}.${k}`;
         const v = obj[k];
+        // console.log("key", _key, v)
         switch (typeof v) {
-            case 'object':
+            case "object":
                 {
                     if (v === null) {
-                        if (jsonMap.has(key)) {
-                            const arr = jsonMap.get(key);
-                            if (arr && arr.indexOf('null') === -1) {
-                                arr.push('null');
+                        if (jsonMap.has(_key)) {
+                            const arr = jsonMap.get(_key);
+                            if (arr && arr.indexOf("null") === -1) {
+                                arr.push("null");
                             }
                         }
                         else {
-                            jsonMap.set(key, ['null']);
+                            jsonMap.set(_key, ["null"]);
                         }
                         break;
                     }
-                    getData(key + '.' + k, v);
+                    getData(_key, v);
                 }
                 break;
-            case 'string':
+            case "string":
                 {
-                    if (jsonMap.has(key)) {
-                        const arr = jsonMap.get(key);
+                    if (jsonMap.has(_key)) {
+                        const arr = jsonMap.get(_key);
                         if (arr && arr.indexOf(v) === -1) {
                             arr.push(v);
                         }
                     }
                     else {
-                        jsonMap.set(key, [v]);
+                        jsonMap.set(_key, [v]);
                     }
                 }
                 break;
-            case 'number':
+            case "number":
                 {
                     const n = v.toString();
-                    if (jsonMap.has(key)) {
-                        const arr = jsonMap.get(key);
+                    if (jsonMap.has(_key)) {
+                        const arr = jsonMap.get(_key);
                         if (arr && arr.indexOf(n) === -1) {
                             arr.push(n);
                         }
                     }
                     else {
-                        jsonMap.set(key, [n]);
+                        jsonMap.set(_key, [n]);
                     }
                 }
                 break;
-            case 'boolean':
+            case "boolean":
                 {
                     const b = v.toString();
-                    if (jsonMap.has(key)) {
-                        const arr = jsonMap.get(key);
+                    if (jsonMap.has(_key)) {
+                        const arr = jsonMap.get(_key);
                         if (arr && arr.indexOf(b) === -1) {
                             arr.push(b);
                         }
                     }
                     else {
-                        jsonMap.set(key, [b]);
+                        jsonMap.set(_key, [b]);
                     }
                 }
                 break;
@@ -75,18 +106,39 @@ const getData = (key, obj) => {
                     // 判断是否是数组
                     if (Array.isArray(v)) {
                         v.forEach((item, index) => {
-                            getData(key + '.' + k + '.' + index, item);
+                            getData(`${_key}.${index}`, item);
                         });
                     }
                 }
         }
     });
 };
-listenServer.on('message', (response) => {
-    // console.log('getdata', response)
-    getData('root', response);
+listenServer.on("message", (response) => {
+    // console.log("getdata", response)
+    getData("root", response);
     // 保存数据到文件
-    const json = JSON.stringify(jsonMap);
-    fs.writeFileSync(path.join(__dirname, 'data.json'), json);
+    let arr = [];
+    jsonMap.forEach((value, key) => {
+        // data += key + ": " + value.join(",") + "\n"
+        arr.push(key + ": " + value.join(","));
+    });
+    // 排序 arr
+    arr.sort((a, b) => {
+        const a1 = a.split(":")[0];
+        const b1 = b.split(":")[0];
+        return a1.localeCompare(b1);
+    });
+    fs.writeFileSync(path.join(__dirname, "../data.txt"), arr.join("\n"));
+    if (response.player?.weapons) {
+        for (const key in response.player.weapons) {
+            const weapon = response.player.weapons[key];
+            // 保存武器数据到 weapons/weaponname.json
+            const weaponName = weapon.name;
+            const weaponPath = path.join(__dirname, `../weapons/${weaponName}.json`);
+            if (!fs.existsSync(weaponPath)) {
+                fs.writeFileSync(weaponPath, JSON.stringify(weapon, null, 2));
+            }
+        }
+    }
 });
 listenServer.Start();
