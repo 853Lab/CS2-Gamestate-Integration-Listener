@@ -1,9 +1,7 @@
 import { ListenServer } from "./listenserver"
-import { GameStateData } from "cs2-gamestate-integration-data/main"
 
-let listenServer = new ListenServer()
-listenServer.conf.wss.enable = true
-listenServer.on("message", (response: GameStateData) => {
+const listenServer = new ListenServer()
+listenServer.on("message", (response) => {
   console.log("getdata", response)
 })
 listenServer.Start()

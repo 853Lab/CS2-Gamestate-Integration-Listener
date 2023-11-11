@@ -1,8 +1,30 @@
 {
-  "name": "cs2_gamestate_integration_websocket",
+  "name": "cs2_gamestate_integration_listener",
   "version": "1.0.0",
-  "description": "CS2 Gamestate Integration WebSocket",
-  "main": "dist/main.js",
+  "description": "CS2 Gamestate Integration Listener",
+  "main": "dist/listenserver.js",
+  "types": "dist/listenserver.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/listenserver.d.ts",
+      "import": "./dist/listenserver.js",
+      "default": "./dist/listenserver.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "type": "commonjs",
   "scripts": {
     "build:auto": "tsc -w",
     "run": "node --inspect dist/main.js",
@@ -10,22 +32,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/853Lab/CS2_Gamestate_Integration_WebSocket.git"
+    "url": "git+https://github.com/853Lab/CS2_Gamestate_Integration_Listener.git"
   },
   "keywords": [],
   "author": "Sonic853",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/853Lab/CS2_Gamestate_Integration_WebSocket/issues"
+    "url": "https://github.com/853Lab/CS2_Gamestate_Integration_Listener/issues"
   },
-  "homepage": "https://github.com/853Lab/CS2_Gamestate_Integration_WebSocket#readme",
+  "homepage": "https://github.com/853Lab/CS2_Gamestate_Integration_Listener#readme",
   "devDependencies": {
     "@types/node": "^20.9.0",
     "@types/ws": "^8.5.9",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "cs2-gamestate-integration-data": "github:Sonic853/CS2-Gamestate-Integration-Data",
-    "ws": "^8.14.2"
+    "cs2-gamestate-integration-data": "github:Sonic853/CS2-Gamestate-Integration-Data"
   }
 }

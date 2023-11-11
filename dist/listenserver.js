@@ -2,24 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ListenServer = void 0;
 const http = require("http");
-const method_1 = require("./method");
-const ws_1 = require("ws");
-/** 建立监听 CS2 发来的数据 */
-class ListenServer extends method_1.EventEmiter {
+const events_1 = require("events");
+/** 建立监听 CS 发来的数据 */
+class ListenServer extends events_1.EventEmitter {
     /** 域名或 IP */
     host = "127.0.0.1";
     /** 端口 */
     port = 8532;
+    /** 服务器 */
     server = null;
-    conf = {
-        wss: {
-            enable: false,
-            port: 8523,
-        }
-    };
-    wss = null;
+    /** CS 发来的数据 */
     body = "";
-    Start() {
+    /** 开始监听 */
+    Start(host = "127.0.0.1", port = 8532) {
+        [this.host, this.port] = [host, port];
         if (this.server)
             return console.log("is Listening at http://" + this.host + ":" + this.port);
         this.server = http.createServer((req, res) => {
@@ -27,23 +23,16 @@ class ListenServer extends method_1.EventEmiter {
         });
         this.server.listen(this.port, this.host);
         console.log("Listening at http://" + this.host + ":" + this.port);
-        if (!this.wss && this.conf.wss.enable) {
-            this.wss = new ws_1.WebSocketServer({
-                port: this.conf.wss.port,
-            });
-        }
         this.emit("open", "Listening");
     }
+    /** 停止监听 */
     async Stop() {
         await new Promise((resolve) => {
             this.server?.close(e => resolve(e));
         });
-        await new Promise((resolve) => {
-            this.wss?.close(e => resolve(e));
-        });
         this.emit("close", "closed");
     }
-    // 处理 CS2 发来的信息，CS2 是一股脑的向程序发送 POST 来达到数据实时
+    /** 创建服务器 */
     createServer(req, res) {
         if (req.method == "POST") {
             res.writeHead(200, { "Content-Type": "text/html" });
@@ -60,8 +49,6 @@ class ListenServer extends method_1.EventEmiter {
                         const msg = JSON.stringify(response);
                         // emit：数据更新了，内容是 response
                         this.emit("message", response);
-                        if (this.conf.wss.enable)
-                            this.wss?.clients.forEach(client => client.send(msg));
                         console.log("POST payload: ", response);
                     }
                 }

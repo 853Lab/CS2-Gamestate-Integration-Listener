@@ -4,7 +4,6 @@ const listenserver_1 = require("./listenserver");
 const fs = require("fs");
 const path = require("path");
 let listenServer = new listenserver_1.ListenServer();
-listenServer.conf.wss.enable = true;
 // 记录节点下的数据记录
 const jsonMap = new Map();
 // 读取先前的数据

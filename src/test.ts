@@ -1,11 +1,8 @@
 import { ListenServer } from "./listenserver"
-import { GameStateData } from "cs2-gamestate-integration-data/main"
 import * as fs from "fs"
 import * as path from "path"
-import { Gun, PistolOf } from "cs2-gamestate-integration-data/weapon/type"
 
 let listenServer = new ListenServer()
-listenServer.conf.wss.enable = true
 // 记录节点下的数据记录
 const jsonMap = new Map<string, string[]>()
 // 读取先前的数据
@@ -109,7 +106,7 @@ const getData = (key: string, obj: any) => {
     }
   })
 }
-listenServer.on("message", (response: GameStateData) => {
+listenServer.on("message", (response) => {
   // console.log("getdata", response)
   getData("root", response)
   // 保存数据到文件

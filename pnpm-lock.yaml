@@ -7,10 +7,7 @@ settings:
 dependencies:
   cs2-gamestate-integration-data:
     specifier: github:Sonic853/CS2-Gamestate-Integration-Data
-    version: github.com/Sonic853/CS2-Gamestate-Integration-Data/97ff4b8ce05572d4b822d77f86e9281a8db6c9ba
-  ws:
-    specifier: ^8.14.2
-    version: 8.14.2
+    version: git@github.com+Sonic853/CS2-Gamestate-Integration-Data/97ff4b8ce05572d4b822d77f86e9281a8db6c9ba
 
 devDependencies:
   '@types/node':
@@ -47,21 +44,8 @@ packages:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
 
-  /ws@8.14.2:
-    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-    dev: false
-
-  github.com/Sonic853/CS2-Gamestate-Integration-Data/97ff4b8ce05572d4b822d77f86e9281a8db6c9ba:
-    resolution: {tarball: https://codeload.github.com/Sonic853/CS2-Gamestate-Integration-Data/tar.gz/97ff4b8ce05572d4b822d77f86e9281a8db6c9ba}
+  git@github.com+Sonic853/CS2-Gamestate-Integration-Data/97ff4b8ce05572d4b822d77f86e9281a8db6c9ba:
+    resolution: {commit: 97ff4b8ce05572d4b822d77f86e9281a8db6c9ba, repo: git@github.com:Sonic853/CS2-Gamestate-Integration-Data.git, type: git}
     name: cs2-gamestate-integration-data
     version: 1.0.0
     dev: false

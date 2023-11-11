@@ -1,46 +1,36 @@
 import http = require("http")
-import { EventEmiter } from "./method"
-import { WebSocketServer } from "ws"
+import { EventEmitter } from "events"
 import { GameStateData } from "cs2-gamestate-integration-data/main"
-/** 建立监听 CS2 发来的数据 */
-export class ListenServer extends EventEmiter {
+
+/** 建立监听 CS 发来的数据 */
+class ListenServer extends EventEmitter {
   /** 域名或 IP */
   host = "127.0.0.1"
   /** 端口 */
   port = 8532
+  /** 服务器 */
   server: http.Server | null = null
-  conf = {
-    wss: {
-      enable: false,
-      port: 8523,
-    }
-  }
-  wss: WebSocketServer | null = null
+  /** CS 发来的数据 */
   body = ""
-  Start() {
+  /** 开始监听 */
+  Start(host = "127.0.0.1", port = 8532) {
+    [this.host, this.port] = [host, port]
     if (this.server) return console.log("is Listening at http://" + this.host + ":" + this.port)
     this.server = http.createServer((req, res) => {
       this.createServer(req, res)
     })
     this.server.listen(this.port, this.host)
     console.log("Listening at http://" + this.host + ":" + this.port)
-    if (!this.wss && this.conf.wss.enable) {
-      this.wss = new WebSocketServer({
-        port: this.conf.wss.port,
-      })
-    }
     this.emit("open", "Listening")
   }
+  /** 停止监听 */
   async Stop() {
     await new Promise((resolve) => {
       this.server?.close(e => resolve(e))
     })
-    await new Promise((resolve) => {
-      this.wss?.close(e => resolve(e))
-    })
     this.emit("close", "closed")
   }
-  // 处理 CS2 发来的信息，CS2 是一股脑的向程序发送 POST 来达到数据实时
+  /** 创建服务器 */
   createServer(req: http.IncomingMessage, res: http.ServerResponse) {
     if (req.method == "POST") {
       res.writeHead(200, { "Content-Type": "text/html" })
@@ -57,7 +47,6 @@ export class ListenServer extends EventEmiter {
             const msg = JSON.stringify(response)
             // emit：数据更新了，内容是 response
             this.emit("message", response)
-            if (this.conf.wss.enable) this.wss?.clients.forEach(client => client.send(msg))
             console.log("POST payload: ", response)
           }
         }
@@ -71,3 +60,25 @@ export class ListenServer extends EventEmiter {
     }
   }
 }
+declare interface ListenServer {
+  /**
+   * 当开始监听时，触发
+   * @param event 类型
+   * @param listener 内容
+   */
+  on(event: "open", listener: (response: "Listening") => void): this;
+  /**
+   * 当 CS 发来数据时，触发
+   * @param event 类型
+   * @param listener CS 发来的数据
+   */
+  on(event: "message", listener: (response: GameStateData) => void): this;
+  /**
+   * 当停止监听时，触发
+   * @param event 类型
+   * @param listener 内容
+   */
+  on(event: "close", listener: (response: "closed") => void): this;
+}
+
+export { ListenServer }
