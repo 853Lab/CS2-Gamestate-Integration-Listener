@@ -1,5 +1,5 @@
 {
-  "name": "cs2_gamestate_integration_listener",
+  "name": "cs2-gamestate-integration-listener",
   "version": "1.0.0",
   "description": "CS2 Gamestate Integration Listener",
   "main": "dist/listenserver.js",
@@ -32,15 +32,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/853Lab/CS2_Gamestate_Integration_Listener.git"
+    "url": "git+https://github.com/853Lab/CS2-Gamestate-Integration-Listener.git"
   },
   "keywords": [],
   "author": "Sonic853",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/853Lab/CS2_Gamestate_Integration_Listener/issues"
+    "url": "https://github.com/853Lab/CS2-Gamestate-Integration-Listener/issues"
   },
-  "homepage": "https://github.com/853Lab/CS2_Gamestate_Integration_Listener#readme",
+  "homepage": "https://github.com/853Lab/CS2-Gamestate-Integration-Listener#readme",
   "devDependencies": {
     "@types/node": "^20.9.0",
     "@types/ws": "^8.5.9",

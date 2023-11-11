@@ -7,13 +7,13 @@ CSGO/CS2 Gamestate Integration Listener
 ### Install
 
 ```Batchfile
-pnpm install https://github.com/853Lab/CS2_Gamestate_Integration_Listener.git
+pnpm install https://github.com/853Lab/CS2-Gamestate-Integration-Listener.git
 ```
 
 ### Import
 
 ```TypeScript
-import { ListenServer } from "cs2_gamestate_integration_listener/listenserver";
+import { ListenServer } from "cs2-gamestate-integration-listener/listenserver";
 
 const listenServer = new ListenServer();
 
