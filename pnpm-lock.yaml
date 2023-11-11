@@ -7,7 +7,7 @@ settings:
 dependencies:
   cs2-gamestate-integration-data:
     specifier: github:Sonic853/CS2-Gamestate-Integration-Data
-    version: github.com/Sonic853/CS2-Gamestate-Integration-Data/2f0d693a04e83a7abff63dd3019c85a64bce4a07
+    version: github.com/Sonic853/CS2-Gamestate-Integration-Data/97ff4b8ce05572d4b822d77f86e9281a8db6c9ba
   ws:
     specifier: ^8.14.2
     version: 8.14.2
@@ -60,8 +60,8 @@ packages:
         optional: true
     dev: false
 
-  github.com/Sonic853/CS2-Gamestate-Integration-Data/2f0d693a04e83a7abff63dd3019c85a64bce4a07:
-    resolution: {tarball: https://codeload.github.com/Sonic853/CS2-Gamestate-Integration-Data/tar.gz/2f0d693a04e83a7abff63dd3019c85a64bce4a07}
+  github.com/Sonic853/CS2-Gamestate-Integration-Data/97ff4b8ce05572d4b822d77f86e9281a8db6c9ba:
+    resolution: {tarball: https://codeload.github.com/Sonic853/CS2-Gamestate-Integration-Data/tar.gz/97ff4b8ce05572d4b822d77f86e9281a8db6c9ba}
     name: cs2-gamestate-integration-data
     version: 1.0.0
     dev: false
