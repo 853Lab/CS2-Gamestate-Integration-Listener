@@ -1,6 +1,6 @@
 {
   "name": "cs2-gamestate-integration-listener",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CS2 Gamestate Integration Listener",
   "main": "dist/listenserver.js",
   "types": "dist/listenserver.d.ts",
@@ -27,7 +27,7 @@
   "type": "commonjs",
   "scripts": {
     "build:auto": "tsc -w",
-    "run": "node --inspect dist/main.js",
+    "run": "node --inspect dist/demo.js",
     "test": "node --inspect dist/test.js"
   },
   "repository": {
@@ -42,9 +42,9 @@
   },
   "homepage": "https://github.com/853Lab/CS2-Gamestate-Integration-Listener#readme",
   "devDependencies": {
-    "@types/node": "^20.9.0",
-    "@types/ws": "^8.5.9",
-    "typescript": "^5.2.2"
+    "@types/node": "^20.12.12",
+    "@types/ws": "^8.5.10",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "cs2-gamestate-integration-data": "github:Sonic853/CS2-Gamestate-Integration-Data"

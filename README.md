@@ -13,7 +13,7 @@ pnpm install https://github.com/853Lab/CS2-Gamestate-Integration-Listener.git
 ### Import
 
 ```TypeScript
-import { ListenServer } from "cs2-gamestate-integration-listener/listenserver";
+import { ListenServer } from "cs2-gamestate-integration-listener/main";
 
 const listenServer = new ListenServer();
 

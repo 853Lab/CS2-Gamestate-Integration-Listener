@@ -1,8 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const listenserver_1 = require("./listenserver");
-const listenServer = new listenserver_1.ListenServer();
-listenServer.on("message", (response) => {
-    console.log("getdata", response);
-});
-listenServer.Start();
+exports.ListenServer = void 0;
+var listenserver_1 = require("./listenserver");
+Object.defineProperty(exports, "ListenServer", { enumerable: true, get: function () { return listenserver_1.ListenServer; } });

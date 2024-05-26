@@ -34,32 +34,32 @@ class ListenServer extends events_1.EventEmitter {
     }
     /** 创建服务器 */
     createServer(req, res) {
-        if (req.method == "POST") {
-            res.writeHead(200, { "Content-Type": "text/html" });
-            let body = "";
-            req.on("data", (data) => {
-                body += data;
-            });
-            req.on("end", () => {
-                if (typeof body === "string") {
-                    // 判断发来的数据是否有更新
-                    if (this.body != body) {
-                        this.body = body;
-                        const response = JSON.parse(body);
-                        const msg = JSON.stringify(response);
-                        // emit：数据更新了，内容是 response
-                        this.emit("message", response);
-                        console.log("POST payload: ", response);
-                    }
-                }
-                res.end("");
-            });
-        }
-        else {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        if (req.method != "POST") {
             console.log("Not expecting other request types...");
-            res.writeHead(200, { "Content-Type": "text/html" });
             res.end("<html><body>HTTP Server at http://" + this.host + ":" + this.port + "</body></html>");
+            return;
         }
+        let body = "";
+        req.on("data", (data) => {
+            body += data;
+        });
+        req.on("end", () => {
+            if (typeof body !== "string") {
+                res.end("");
+                return;
+            }
+            // 判断发来的数据是否有更新
+            if (this.body != body) {
+                this.body = body;
+                const response = JSON.parse(body);
+                const msg = JSON.stringify(response, null, 2);
+                // emit：数据更新了，内容是 response
+                this.emit("message", response);
+                console.log("POST payload: ", msg);
+            }
+            res.end("");
+        });
     }
 }
 exports.ListenServer = ListenServer;
